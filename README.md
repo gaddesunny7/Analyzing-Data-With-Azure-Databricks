@@ -1,5 +1,6 @@
 # Analyzing Yelp Data With Azure Databricks
 
+Simple overview of use/purpose.
 
 ## Description
 
