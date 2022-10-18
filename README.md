@@ -1,6 +1,6 @@
-# Analyzing Yelp Dataset With Azure Databricks
+# Yelp Dataset Analysis With Azure Databricks
 
-In this Databricks Azure project, you will use Spark & Parquet file formats to analyse the Yelp reviews dataset. As part of this you will deploy Azure data factory, data pipelines and visualise the analysis.
+Analysis and Visualisation of Yelp Dataset using Azure Data Lake Gen2, Azure Databricks, PySpark, Spark SQL
 
 ## Description
 
