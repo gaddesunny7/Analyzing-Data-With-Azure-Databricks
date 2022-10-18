@@ -24,7 +24,7 @@ The aim of this project, is to  Extract the data from the Azure Data Lake Storag
 - PySpark
 - Spark SQL
 
-## Data Formats Used
+## Data Formats
 - JSON
 - Parquet
 - Delta
