@@ -1,9 +1,5 @@
-# Analyzing-Yelp-Data-With-Azure-Databricks
+# Analyzing Yelp Data With Azure Databricks
 
-
-# Project Title
-
-Simple overview of use/purpose.
 
 ## Description
 
