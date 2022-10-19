@@ -6,7 +6,7 @@ from pyspark.sql.window import Window
 
 #Connect To Azure DataLakeStorage
 spark.conf.set(
-            "fs.azure.account.key.sadevdatalakeaz.dfs.core.windows.net",
+            "fs.azure.account.key.<storage-account-name>.dfs.core.windows.net",
             "<Generate Token>"
             )
 
