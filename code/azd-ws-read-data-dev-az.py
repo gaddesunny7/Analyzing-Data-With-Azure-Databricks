@@ -7,7 +7,7 @@ from pyspark.sql.window import Window
 #Connect To Azure DataLakeStorage
 spark.conf.set(
             "fs.azure.account.key.sadevdatalakeaz.dfs.core.windows.net",
-            "cYaqBCIC7Njfa54+EpF5o0MRIm4ePv9pQT6fAKbSdgnNl25z7LQS7M4xnXI0t6zpCMl2EuNxhl16+AStgcF85g=="
+            "<Generate Token>"
             )
 
 # COMMAND ----------
@@ -15,7 +15,7 @@ spark.conf.set(
 # COMMAND ----------
 
 #Access the files in the container through the Data Lake Storage Account
-dbutils.fs.ls("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/")
+dbutils.fs.ls("abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/")
 
 # COMMAND ----------
 
@@ -23,16 +23,16 @@ dbutils.fs.ls("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/"
 
 #Commenting it out because it will be used in other notebook
 dbutils.fs.mount(
-source = "wasbs://sacondatalakedevaz@sadevdatalakeaz.blob.core.windows.net",
-mount_point = "/mnt/sacondatalakedevaz",
-extra_configs = {"fs.azure.sas.sacondatalakedevaz.sadevdatalakeaz.blob.core.windows.net":"sp=racw&st=2022-10-17T22:08:28Z&se=2022-10-18T06:08:28Z&spr=https&sv=2021-06-08&sr=c&sig=%2BpJIwUm9VjV27IaOaJe51pCf7PlXRfH%2BSTKX%2F2bWdrA%3D"})
+source = "wasbs://<storage-container-name>@<storage-account-name>.blob.core.windows.net",
+mount_point = "/mnt/<storage-container-name>",
+extra_configs = {"fs.azure.sas.<storage-container-name>.<storage-account-name>.blob.core.windows.net":"<Genrate Key Token>"})
 
 # COMMAND ----------
 
 # COMMAND ----------
 
 #Unmount a file in the DBFS
-dbutils.fs.unmount("/mnt/sacondatalakedevaz/")
+dbutils.fs.unmount("/mnt/<storage-container-name>/")
 
 # COMMAND ----------
 
@@ -43,47 +43,47 @@ dbutils.fs.ls('/mnt/')
 
 #Read Yelp DataSets in ADLS Gen2 and convert Json to Parquet for better performance
 #File Location and Type for movies,link,ratings
-business = "/mnt/sacondatalakedevaz/yelp_dataset/yelp_academic_dataset_business.json"
-checkin = "/mnt/sacondatalakedevaz/yelp_dataset/yelp_academic_dataset_checkin.json"
-review = "/mnt/sacondatalakedevaz/yelp_dataset/yelp_academic_dataset_review.json"
-tip = "/mnt/sacondatalakedevaz/yelp_dataset/yelp_academic_dataset_tip.json"
-user = "/mnt/sacondatalakedevaz/yelp_dataset/yelp_academic_dataset_tip.json"
+business = "/mnt/<storage-container-name>/yelp_dataset/yelp_academic_dataset_business.json"
+checkin = "/mnt/<storage-container-name>/yelp_dataset/yelp_academic_dataset_checkin.json"
+review = "/mnt/<storage-container-name>/yelp_dataset/yelp_academic_dataset_review.json"
+tip = "/mnt/<storage-container-name>/yelp_dataset/yelp_academic_dataset_tip.json"
+user = "/mnt/<storage-container-name>/yelp_dataset/yelp_academic_dataset_tip.json"
 
 # COMMAND ----------
 
 df_business = spark.read.json(business)
-df_business.write.mode('overwrite').parquet("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/business.parquet")
+df_business.write.mode('overwrite').parquet("abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/business.parquet")
 
 
 
 df_checkin = spark.read.json(checkin)
-df_checkin.write.mode('overwrite').parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/checkin.parquet')
+df_checkin.write.mode('overwrite').parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/checkin.parquet')
 
 df_review = spark.read.json(review)
-df_review.write.mode('overwrite').parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/review.parquet')
+df_review.write.mode('overwrite').parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/review.parquet')
 
 df_tip = spark.read.json(tip)
-df_tip.write.mode('overwrite').parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/tip.parquet')
+df_tip.write.mode('overwrite').parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/tip.parquet')
 
 df_user = spark.read.json(user)
-df_user.write.mode('overwrite').parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/user.parquet')
+df_user.write.mode('overwrite').parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/user.parquet')
 
 # COMMAND ----------
 
 #Delta is also faster but using Parquet For this Project
 #df_user = spark.read.json(user)
-#df_user.write.mode('overwrite').parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/user.delta')
+#df_user.write.mode('overwrite').parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/user.delta')
 
 # COMMAND ----------
 
-df_business =spark.read.parquet("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/business.parquet")
+df_business =spark.read.parquet("abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/business.parquet")
 
 # COMMAND ----------
 
-df_checkin = spark.read.parquet("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/checkin.parquet")
-df_review = spark.read.parquet("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/review.parquet")
-df_tip = spark.read.parquet("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/tip.parquet")
-df_user = spark.read.parquet("abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/yelp_dataset_json_to_parquet/user.parquet")
+df_checkin = spark.read.parquet("abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/checkin.parquet")
+df_review = spark.read.parquet("abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/review.parquet")
+df_tip = spark.read.parquet("abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/tip.parquet")
+df_user = spark.read.parquet("abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/yelp_dataset_json_to_parquet/user.parquet")
 
 # COMMAND ----------
 
@@ -108,7 +108,7 @@ display(df_tip)
 # COMMAND ----------
 
 #Partition dataset tip by date column
-df_tip.write.mode('overwrite').partitionBy("tip_year",                              "tip_month").parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/tip_partitioned_by_year_and_month/')
+df_tip.write.mode('overwrite').partitionBy("tip_year",                              "tip_month").parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/tip_partitioned_by_year_and_month/')
 
 # COMMAND ----------
 
@@ -126,16 +126,16 @@ print("Increased Number of Partitions after Coalesce " + str(df_increase_part.rd
 
 # COMMAND ----------
 
-df_user.coalesce(10).write.mode('overwrite').parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/coalesce/user.parquet')
+df_user.coalesce(10).write.mode('overwrite').parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/coalesce/user.parquet')
 
 # COMMAND ----------
 
-df_user.repartition(10).write.mode('overwrite').parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/repartition/user.parquet')
+df_user.repartition(10).write.mode('overwrite').parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/repartition/user.parquet')
 
 # COMMAND ----------
 
 #Reading Dataset with repartitioning
-df_user  = spark.read.parquet('abfss://sacondatalakedevaz@sadevdatalakeaz.dfs.core.windows.net/repartition/user.parquet')
+df_user  = spark.read.parquet('abfss://<storage-container-name>@<storage-account-name>.dfs.core.windows.net/repartition/user.parquet')
 display(df_user)
 
 # COMMAND ----------
