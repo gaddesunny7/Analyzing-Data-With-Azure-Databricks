@@ -17,7 +17,6 @@ The aim of this project, is to  Extract the data from the Azure Data Lake Storag
 
 ## Services
 - Azure Databricks
-- Azure Data Factory
 - Azure Data Lake Storage
 
 ## Language
