@@ -1,5 +1,4 @@
 # Yelp Dataset Analysis With Azure Databricks
-
 Analysis and Visualisation of Yelp Dataset using Azure Databricks
 
 ## Description
